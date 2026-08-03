@@ -125,3 +125,38 @@ or, simply copy and pasta.
   `<BS>` separately if it starts navigating.
 - The editor maps are normal-mode only. Add `t`/`i` modes yourself if you want
   to navigate out of terminal/insert mode.
+
+## Option / Alt+hjkl (force pane focus)
+
+When Neovim is focused, smart `Ctrl+h/j/k/l` forwards into the editor. If you want
+chords that **always** move herdr panes (including while nvim is focused), bind
+the force actions:
+
+```toml
+[[keys.command]]
+key = "alt+h"
+type = "plugin_action"
+command = "vim-herdr-navigation.force-left"
+description = "pane left (force)"
+
+[[keys.command]]
+key = "alt+j"
+type = "plugin_action"
+command = "vim-herdr-navigation.force-down"
+description = "pane down (force)"
+
+[[keys.command]]
+key = "alt+k"
+type = "plugin_action"
+command = "vim-herdr-navigation.force-up"
+description = "pane up (force)"
+
+[[keys.command]]
+key = "alt+l"
+type = "plugin_action"
+command = "vim-herdr-navigation.force-right"
+description = "pane right (force)"
+```
+
+On macOS, Option is Alt. Also load `editor/nvim.lua` so smart Ctrl+hjkl can leave
+Neovim at a split edge (see Install §2).
