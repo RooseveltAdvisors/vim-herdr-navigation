@@ -103,11 +103,12 @@ or, simply copy and pasta.
 
 ## Notes & tradeoffs
 
-- **Other TUIs that use `Ctrl+h/j/k/l`** ([vi-sql](https://github.com/kopecmaciej/vi-sql),
-  `lazygit`, `k9s`). By default every non-Vim pane just moves herdr focus. To let
-  one of these handle the chord itself, name it in `HERDR_NAV_PASSTHROUGH_RE` — a
-  regex on the lower-cased process name, anchored (`^…$`) for an exact match. Set
-  it where you launch herdr:
+- **Other TUIs that use `Ctrl+h/j/k/l`**
+  ([vi-sql](https://github.com/kopecmaciej/vi-sql), `lazygit`, `k9s`). By default
+  every non-Vim pane just moves herdr focus. To let
+  one of these handle the chord itself, name it in
+  `HERDR_NAV_PASSTHROUGH_RE` — a regex on the lower-cased process name, anchored
+  (`^…$`) for an exact match. Set it where you launch herdr:
 
   ```bash
   export HERDR_NAV_PASSTHROUGH_RE='^(vi-sql|lazygit)$'
@@ -125,38 +126,3 @@ or, simply copy and pasta.
   `<BS>` separately if it starts navigating.
 - The editor maps are normal-mode only. Add `t`/`i` modes yourself if you want
   to navigate out of terminal/insert mode.
-
-## Option / Alt+hjkl (force pane focus)
-
-When Neovim is focused, smart `Ctrl+h/j/k/l` forwards into the editor. If you want
-chords that **always** move herdr panes (including while nvim is focused), bind
-the force actions:
-
-```toml
-[[keys.command]]
-key = "alt+h"
-type = "plugin_action"
-command = "vim-herdr-navigation.force-left"
-description = "pane left (force)"
-
-[[keys.command]]
-key = "alt+j"
-type = "plugin_action"
-command = "vim-herdr-navigation.force-down"
-description = "pane down (force)"
-
-[[keys.command]]
-key = "alt+k"
-type = "plugin_action"
-command = "vim-herdr-navigation.force-up"
-description = "pane up (force)"
-
-[[keys.command]]
-key = "alt+l"
-type = "plugin_action"
-command = "vim-herdr-navigation.force-right"
-description = "pane right (force)"
-```
-
-On macOS, Option is Alt. Also load `editor/nvim.lua` so smart Ctrl+hjkl can leave
-Neovim at a split edge (see Install §2).

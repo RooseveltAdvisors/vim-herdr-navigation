@@ -1,11 +1,14 @@
 id = "vim-herdr-navigation"
 name = "Vim Herdr Navigation"
-version = "0.1.1"
+version = "0.1.0"
 min_herdr_version = "0.7.0"
-description = "Seamless Ctrl+h/j/k/l navigation across herdr panes and Vim/Neovim splits; Option/Alt force-focus actions"
+description = "Seamless Ctrl+h/j/k/l navigation across herdr panes and Vim/Neovim splits"
 platforms = ["linux", "macos"]
 
-# Smart Ctrl path: forward into Vim when focused, else move herdr pane.
+# One action per direction. Each is bound to a direct Ctrl chord in herdr's
+# config (see README). The action forwards the key into Vim when the focused
+# pane is running Vim/Neovim, otherwise it moves herdr's pane focus.
+
 [[actions]]
 id = "left"
 title = "Navigate left (Vim/herdr)"
@@ -29,28 +32,3 @@ id = "right"
 title = "Navigate right (Vim/herdr)"
 contexts = ["global"]
 command = ["bash", "navigate.sh", "right"]
-
-# Force path: always move herdr panes (never forward into nvim). Bind to alt/option+hjkl.
-[[actions]]
-id = "force-left"
-title = "Force pane left (no editor forward)"
-contexts = ["global"]
-command = ["bash", "navigate.sh", "left", "force"]
-
-[[actions]]
-id = "force-down"
-title = "Force pane down (no editor forward)"
-contexts = ["global"]
-command = ["bash", "navigate.sh", "down", "force"]
-
-[[actions]]
-id = "force-up"
-title = "Force pane up (no editor forward)"
-contexts = ["global"]
-command = ["bash", "navigate.sh", "up", "force"]
-
-[[actions]]
-id = "force-right"
-title = "Force pane right (no editor forward)"
-contexts = ["global"]
-command = ["bash", "navigate.sh", "right", "force"]

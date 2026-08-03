@@ -2,7 +2,7 @@
 #
 # vim-herdr-navigation — herdr side
 #
-# Invoked by a herdr keybind as: navigate.sh <left|down|up|right> [force]
+# Invoked by a herdr keybind as: navigate.sh <left|down|up|right>
 #
 # If the focused pane is running Vim/Neovim in the foreground, hand the matching
 # Ctrl chord to that pane so Vim moves between its own splits (and, at a split
@@ -11,17 +11,12 @@
 # HERDR_NAV_PASSTHROUGH_RE (off by default — see below). For any other foreground
 # process, move herdr's pane focus directly.
 #
-# Pass a second argument `force` (or set HERDR_NAV_FORCE_FOCUS=1) to always move
-# herdr pane focus and never forward into the editor. Bind this to Option/Alt+hjkl
-# so navigation still works when Neovim is focused and would otherwise swallow keys.
-#
 # Requires `jq`. Without it, detection is skipped and every key just moves the
 # herdr pane focus (no Vim awareness).
 
 set -euo pipefail
 
-dir="${1:?usage: navigate.sh <left|down|up|right> [force]}"
-mode="${2:-}"
+dir="${1:?usage: navigate.sh <left|down|up|right>}"
 herdr="${HERDR_BIN_PATH:-herdr}"
 pane="${HERDR_PANE_ID:-}"
 
@@ -32,22 +27,6 @@ case "$dir" in
   right) key="ctrl+l" ;;
   *) echo "navigate.sh: unknown direction: $dir" >&2; exit 2 ;;
 esac
-
-force=0
-if [ "$mode" = "force" ] || [ "${HERDR_NAV_FORCE_FOCUS:-}" = "1" ]; then
-  force=1
-fi
-
-focus_pane() {
-  if [ -n "$pane" ]; then
-    exec "$herdr" pane focus --direction "$dir" --pane "$pane"
-  fi
-  exec "$herdr" pane focus --direction "$dir" --current
-}
-
-if [ "$force" -eq 1 ]; then
-  focus_pane
-fi
 
 # Foreground process names that mean "Vim is in control of this pane".
 # Same matcher vim-tmux-navigator uses: vi, vim, nvim, view, gvim, *diff, ...
@@ -70,6 +49,9 @@ fi
 
 if [ "$forward" -eq 1 ]; then
   exec "$herdr" pane send-keys "$pane" "$key"
+elif [ -n "$pane" ]; then
+  exec "$herdr" pane focus --direction "$dir" --pane "$pane"
+else
+  # Invoked outside a pane (no $HERDR_PANE_ID): fall back to global focus.
+  exec "$herdr" pane focus --direction "$dir" --current
 fi
-
-focus_pane
