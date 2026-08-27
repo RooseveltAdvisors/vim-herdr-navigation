@@ -20,7 +20,7 @@ local function nav(wincmd, dir)
   -- At a split edge: cross into the surrounding multiplexer.
   if vim.env.HERDR_PANE_ID and vim.env.HERDR_PANE_ID ~= "" then
     local herdr = vim.env.HERDR_BIN_PATH
-    if herdr == nil or herdr == "" then
+    if herdr == nil or herdr == "" or vim.fn.executable(herdr) ~= 1 then
       herdr = "herdr"
     end
     -- Target this pane explicitly: `--current` resolves to the server's

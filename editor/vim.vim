@@ -14,7 +14,7 @@ if empty($HERDR_PANE_ID)
 endif
 
 function! s:HerdrFocus(dir) abort
-  let l:herdr = empty($HERDR_BIN_PATH) ? 'herdr' : $HERDR_BIN_PATH
+  let l:herdr = executable($HERDR_BIN_PATH) ? $HERDR_BIN_PATH : 'herdr'
   call system(shellescape(l:herdr) . ' pane focus --direction ' . a:dir . ' --current')
 endfunction
 
