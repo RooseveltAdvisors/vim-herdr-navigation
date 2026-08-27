@@ -17,9 +17,6 @@
 set -euo pipefail
 
 dir="${1:?usage: navigate.sh <left|down|up|right>}"
-herdr="${HERDR_BIN_PATH:-herdr}"
-pane="${HERDR_PANE_ID:-}"
-
 case "$dir" in
   left)  key="ctrl+h" ;;
   down)  key="ctrl+j" ;;
@@ -27,6 +24,16 @@ case "$dir" in
   right) key="ctrl+l" ;;
   *) echo "navigate.sh: unknown direction: $dir" >&2; exit 2 ;;
 esac
+
+if [ -n "${HERDR_BIN_PATH:-}" ] && [ -x "$HERDR_BIN_PATH" ]; then
+  herdr="$HERDR_BIN_PATH"
+elif herdr="$(command -v herdr 2>/dev/null)"; then
+  :
+else
+  echo "navigate.sh: unable to find an executable herdr (set HERDR_BIN_PATH or put herdr on PATH)" >&2
+  exit 127
+fi
+pane="${HERDR_PANE_ID:-}"
 
 # Foreground process names that mean "Vim is in control of this pane".
 # Same matcher vim-tmux-navigator uses: vi, vim, nvim, view, gvim, *diff, ...

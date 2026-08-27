@@ -21,6 +21,10 @@ Two cooperating sides, like `vim-tmux-navigator`:
   `herdr pane focus --direction` to cross into the neighbouring herdr pane. Vim
   finds its own pane through the `$HERDR_PANE_ID` herdr injects into every pane.
 
+All three entry points use `$HERDR_BIN_PATH` only when it names an executable;
+otherwise they resolve `herdr` from `PATH`. If neither is available,
+`navigate.sh` reports the missing executable and exits with status 127.
+
 ## Requirements
 
 - herdr `>= 0.7.0`
