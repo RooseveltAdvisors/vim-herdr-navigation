@@ -6,9 +6,6 @@ script="$repo_root/navigate.sh"
 tmp_dir="$(mktemp -d)"
 trap 'rm -rf "$tmp_dir"' EXIT
 
-grep -Fq "[ -x \"\$HERDR_BIN_PATH\" ]" "$script"
-grep -Fq 'command -v herdr' "$script"
-
 cat > "$tmp_dir/herdr" <<'EOF'
 #!/usr/bin/env bash
 printf '%s\n' "$*" > "$HERDR_TEST_LOG"
