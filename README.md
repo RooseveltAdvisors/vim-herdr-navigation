@@ -1,5 +1,22 @@
 # vim-herdr-navigation
 
+## Demo
+
+Press `Ctrl+h/j/k/l` in Vim/Neovim and focus moves through the surrounding
+Herdr panes as one seamless 2x2 workspace:
+
+![Animated demo: Ctrl+h/j/k/l hops focus between four Herdr panes](demo/vim-herdr-navigation.gif)
+
+| Focus starts here | One hop later |
+| --- | --- |
+| ![Focus on the top-left Neovim pane](demo/screenshots/focus-1-top-left.png) | ![Focus on the top-right shell pane](demo/screenshots/focus-2-top-right.png) |
+| The active border marks the focused pane. | The same navigation chord crosses the pane boundary. |
+
+| Keep hopping | Full loop |
+| --- | --- |
+| ![Focus on the bottom-right logs pane](demo/screenshots/focus-3-bottom-right.png) | ![Focus on the bottom-left Neovim pane](demo/screenshots/focus-4-bottom-left.png) |
+| Direction keys land directly on the next pane. | Vim splits and Herdr panes share one focus model. |
+
 Navigate [herdr](https://herdr.dev) panes and Vim/Neovim splits as if they were
 one app. `Ctrl+h/j/k/l` moves between Vim splits while you're in Vim, and falls
 through to move between herdr panes when Vim hits an edge — and the same keys
